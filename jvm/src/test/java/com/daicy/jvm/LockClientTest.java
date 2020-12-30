@@ -4,6 +4,12 @@ package com.daicy.jvm;
 import org.junit.Test;
 import org.openjdk.jol.info.ClassLayout;
 import com.daicy.jvm.LockClient.User;
+import org.openjdk.jol.vm.VM;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author: create by daichangya
@@ -13,8 +19,9 @@ import com.daicy.jvm.LockClient.User;
  */
 public class LockClientTest {
     @Test
-    public void noLock() {
+    public void noLock() throws InterruptedException {
         User user = new User();
+        System.out.println(VM.current().details());
         System.out.println(ClassLayout.parseInstance(user).toPrintable());
     }
 
@@ -56,7 +63,7 @@ public class LockClientTest {
     }
 
     @Test
-    public void heavyWeightLock() {
+    public void heavyWeightLock() throws InterruptedException {
         User user = new User();
         System.out.println(ClassLayout.parseInstance(user).toPrintable());
         Thread t1 = new Thread(() -> {
